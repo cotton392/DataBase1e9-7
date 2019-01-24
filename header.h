@@ -5,7 +5,7 @@
 //DatabaseUtilに実装する関数
 void WordRegister();
 void WordSearch();
-void Worddelete();
+void WordDelete();
 
 //UserUtilに実装する関数
 void UseRegister();
