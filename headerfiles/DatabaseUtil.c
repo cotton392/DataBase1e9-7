@@ -19,10 +19,10 @@ void WordSearch(){
 		if()
 	}
 	fclose(fp);
-	printf("%s\n", hoge);
 }
 
 void WordRegister(){
+	WordSearch();
 	FILE *fp;
 	char hoge[10];
 	fp=fopen("hoge.txt","a+");
@@ -30,8 +30,13 @@ void WordRegister(){
 		printf("hoge\n");
 		exit(1);
 	}
-	while(1)
+	if(/*すでにあったら*/){
+		printf("hoge\n");
+		exit(1);
+    }
+    fprintf(fp, "%s\n", hoge);
+    fclose(fp);
 }
-void WordDelete();.
+void WordDelete();
 
 
