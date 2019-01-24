@@ -1,3 +1,5 @@
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +39,21 @@ void WordRegister(){
     fprintf(fp, "%s\n", hoge);
     fclose(fp);
 }
-void WordDelete();
+void WordDelete(){
+	WordSearch();
+	FILE *fp;
+	char hoge[10];
+	fp=fopen("hoge.txt","a+");
+	if(fp==NULL){
+		printf("hoge\n");
+		exit(1);
+	}
+	if(){
+		fputs('\0',fp);
+		exit(1);
+    }
+    fprintf(fp, "%s\n", hoge);
+    fclose(fp);
+}
 
 
