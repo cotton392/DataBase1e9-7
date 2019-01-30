@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "../header.h"
+
 void UserRegister(){
   char name[100],username[100];
   FILE *fp;
@@ -36,7 +38,7 @@ void UserRegister(){
   return ;
 }
 
-int UserCheck(){
+int UserCheckFlager(int* CheckFlag){
   char name[100],username[100];
   FILE *fp;
   printf("ユーザー名を入力してください >> ");
@@ -49,7 +51,8 @@ int UserCheck(){
   }
   while(fscanf(fp, "%s", username) != EOF){
     if(strcmp(name, username) == 0){
-      return 1;
+      *CheckFlag = 1;
+      return 0;
     }
   }
   fclose(fp);

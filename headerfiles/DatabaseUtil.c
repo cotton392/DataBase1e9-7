@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "../header.h"
+
 //単語検索
 void WordSearch() {
 	FILE *fp;
@@ -46,7 +48,7 @@ void WordRegister() {
 	scanf("%s", search);
 	fp = fopen("DataBaseFile", "r");
 	if (fp == NULL) {
-		printf("開けませんでした\n");
+		printf("DataBaseFileが存在しません。\n");
 		exit(1);
 	}
 	
@@ -63,18 +65,17 @@ void WordRegister() {
 	fclose(fp);
 	//↑単語検索
 
-	FILE *fp;
 	fp = fopen("DataBaseFile", "a");
 	if (fp == NULL) {
-		printf("開けませんでした\n");
+		printf("DataBaseFileが存在しません。\n");
 		exit(1);
 	}
 	if (check == 1) {
-		printf("%sは既に登録されています\n",search);
+		printf("%sは既に登録されています。\n",search);
 		exit(1);
 	}
 	fprintf(fp,"%s %s %s",search,mean,user);
-	printf("%sが登録されました.\n", search);
+	printf("%sが登録されました。\n", search);
 	fclose(fp);
 	return ;
 }
@@ -85,7 +86,7 @@ void WordDelete() {
 	char word1[100],word2[100],word3[100], search[100],user[100],mean[100];
 	FILE *fp, *tmp;
 
-	printf("消去したい言葉を入力してください >> ");
+	printf("消去したい単語を入力してください >> ");
 	scanf("%s", search);
 	printf("意味を入力してください >> ");
 	scanf("%s",mean);
