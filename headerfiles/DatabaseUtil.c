@@ -6,6 +6,7 @@
 //単語検索
 void WordSearch() {
 	FILE *fp;
+	int index=0;
 	char word[100], search[100];
 	scanf("%s", search);
 	fp = fopen("DataBaseFile", "r");
@@ -18,10 +19,14 @@ void WordSearch() {
 			printf("ありませんでした\n");
 			break;
 		}
-		if (strcmp(word, search) == 0) {
-			printf("%sを発見しました\n",word);
+		if (strcmp(word, search) == 0 && index%3==0) {
+			char mean[100];
+			fscanf(fp, "%s", mean);
+			fscanf(fp, "%s", search);
+			printf("単語: %s , 意味: %s ,ユーザー: %s\n" ,word,mean,search);
 			break;
 		}
+		index++;
 	}
 	fclose(fp);
 	return;
@@ -30,8 +35,14 @@ void WordSearch() {
 //単語登録
 void WordRegister() {
 	int check = 0;//既に登録されていれば1になる
+	int index=0;
 	FILE *fp;
-	char word[100], search[100];
+	char word[100], search[100],user[100],mean[100];
+	printf("user: ");
+	scanf("%s",user);
+	printf("意味: ");
+	scanf("%s",mean);
+	printf("単語: ");
 	scanf("%s", search);
 	fp = fopen("DataBaseFile", "r");
 	if (fp == NULL) {
@@ -43,29 +54,27 @@ void WordRegister() {
 		if (fscanf(fp, "%s", word) == EOF) {
 			break;
 		}
-		if (strcmp(word, search) == 0) {
+		if (strcmp(word, search) == 0 && index%3==0) {
 			check++;
 			break;
 		}
+		index++;
 	}
 	fclose(fp);
 	//↑単語検索
 
 	FILE *fp;
-	char word[100];
 	fp = fopen("DataBaseFile", "a");
 	if (fp == NULL) {
 		printf("開けませんでした\n");
 		exit(1);
 	}
 	if (check == 1) {
-		printf("%sは既に登録されています\n",word);
+		printf("%sは既に登録されています\n",search);
 		exit(1);
 	}
-	if (fprintf(fp, "%s\n", word) == 0) {
-		printf("失敗\n");
-	}
-	printf("%sが登録されました.\n", word);
+	fprintf(fp,"%s %s %s",search,mean,user);
+	printf("%sが登録されました.\n", search);
 	fclose(fp);
 	return ;
 }
@@ -73,12 +82,16 @@ void WordRegister() {
 //単語削除
 void WordDelete() {
 	int check = 0;//単語があれば1
-	char word[100], search[100];
+	char word1[100],word2[100],word3[100], search[100],user[100],mean[100];
 	FILE *fp, *tmp;
 
 	printf("消去したい言葉を入力してください >> ");
 	scanf("%s", search);
-
+	printf("意味を入力してください >> ");
+	scanf("%s",mean);
+	printf("ユーザー名を入力してください >> ");
+	scanf("%s",user);
+	
 	fp = fopen("DataBaseFile", "r");
 	if (fp == NULL) {
 		printf("開けなかった\n");
@@ -87,16 +100,20 @@ void WordDelete() {
 
 	//コピーのファイルを作る
 	tmp = fopen("CopyFile", "w");
-	while (fscanf(fp, "%s", word) != EOF) {
-		if (strcmp(word, search) != 0) {
-			fprintf(tmp, "%s\n", word);
-			check++;
+	while (fscanf(fp, "%s", word1) != EOF) {
+		fscanf(fp,"%s",word2);
+		fscanf(fp,"%s",word3);
+		if (strcmp(word1, search) != 0) {
+			 fprintf(tmp, "%s\n", word1);
+			 fprintf(tmp, "%s\n", word2);
+			 fprintf(tmp, "%s\n", word3);
+		         check++;
 		}
 	}
 	fclose(fp);
 	fclose(tmp);
 	if (check == 0) {
-		printf("%sは登録されていません.\n\n", word);
+		printf("%sは登録されていません.\n", search);
 		return ;
 	}
 
