@@ -38,7 +38,7 @@ void UserRegister(){
   return ;
 }
 
-int UserCheckFlager(int* CheckFlag){
+int UserCheck(int* CheckFlag){
   char name[100],username[100];
   FILE *fp;
   printf("ユーザー名を入力してください >> ");
@@ -56,6 +56,8 @@ int UserCheckFlager(int* CheckFlag){
     }
   }
   fclose(fp);
+  printf("ユーザー名が存在しないか、あるいは間違っています。\n");
+  *CheckFlag = 0;
   return 0;
 }
 

@@ -6,10 +6,11 @@
 #include "../header.h"
 
 //単語検索
-void WordSearch() {
+int WordSearch() {
 	FILE *fp;
 	int index=0;
 	char word[100], search[100];
+	printf("単語:");
 	scanf("%s", search);
 	fp = fopen("DataBaseFile", "r");
 	if (fp == NULL) {
@@ -25,27 +26,28 @@ void WordSearch() {
 			char mean[100];
 			fscanf(fp, "%s", mean);
 			fscanf(fp, "%s", search);
-			printf("単語: %s , 意味: %s ,ユーザー: %s\n" ,word,mean,search);
+			printf("\n単語: %s\n意味: %s\nユーザー: %s\n\n" ,word,mean,search);
 			break;
 		}
 		index++;
 	}
 	fclose(fp);
-	return;
+	return 0;
 }
 
 //単語登録
-void WordRegister() {
+int WordRegister() {
 	int check = 0;//既に登録されていれば1になる
 	int index=0;
 	FILE *fp;
 	char word[100], search[100],user[100],mean[100];
-	printf("user: ");
+	printf("ユーザー名: ");
 	scanf("%s",user);
-	printf("意味: ");
-	scanf("%s",mean);
 	printf("単語: ");
 	scanf("%s", search);
+	printf("意味: ");
+	scanf("%s",mean);
+
 	fp = fopen("DataBaseFile", "r");
 	if (fp == NULL) {
 		printf("DataBaseFileが存在しません。\n");
@@ -75,15 +77,16 @@ void WordRegister() {
 		exit(1);
 	}
 	fprintf(fp,"%s %s %s",search,mean,user);
+	fprintf(fp, "\n");
 	printf("%sが登録されました。\n", search);
 	fclose(fp);
-	return ;
+	return 0;
 }
 
 //単語削除
-void WordDelete() {
+int WordDelete() {
 	int check = 0;//単語があれば1
-	char word1[100],word2[100],word3[100], search[100],user[100],mean[100];
+	char word1[100],word2[100],word3[100],word[100],search[100],user[100],mean[100];
 	FILE *fp, *tmp;
 
 	printf("消去したい単語を入力してください >> ");
@@ -105,9 +108,7 @@ void WordDelete() {
 		fscanf(fp,"%s",word2);
 		fscanf(fp,"%s",word3);
 		if (strcmp(word1, search) != 0) {
-			 fprintf(tmp, "%s\n", word1);
-			 fprintf(tmp, "%s\n", word2);
-			 fprintf(tmp, "%s\n", word3);
+			 fprintf(tmp, "%s %s %s\n", word1, word2, word3);
 		         check++;
 		}
 	}
@@ -115,19 +116,19 @@ void WordDelete() {
 	fclose(tmp);
 	if (check == 0) {
 		printf("%sは登録されていません.\n", search);
-		return ;
+		return 0;
 	}
 
 	fp = fopen("DataBaseFile", "w");
 	tmp = fopen("CopyFile", "r");
 	
-	while (fscanf(tmp, "%s", word) != EOF) {
-		fprintf(fp, "%s\n", word);
+	while (fscanf(tmp, "%s %s %s", word1, word2, word3) != EOF) {
+		fprintf(fp, "%s %s %s\n", word1, word2, word3);
 	}
 	fclose(fp);
 	fclose(tmp);
 	printf("%sを消去しました。\n", search);
-	return ;
+	return 0;
 }
 
 

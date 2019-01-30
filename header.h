@@ -3,13 +3,13 @@
 
 //UserUtilに実装する関数
 void UserRegister();
-int UserCheckFlager(int* CheckFlag);
+int  UserCheck(int* CheckFlag);
 void UserDelete();
 
 //DatabaseUtilに実装する関数
-void WordRegister();
-void WordSearch();
-void WordDelete();
+int  WordRegister();
+int WordSearch();
+int WordDelete();
 
 
 #endif

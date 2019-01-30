@@ -6,11 +6,9 @@
 #include "header.h"
 
 void Menu(void){
-	printf("DataBase1e9-7へようこそ!\n");
-	printf("\n");
 	printf("1.単語登録(R)\n");
 	printf("2.単語検索(S)\n");
-	printf("3.単語削除(W)\n");
+	printf("3.単語削除(E)\n");
 	printf("4.ユーザー削除(D)\n");
 	printf("5.終了(Q)\n");
 	printf(">>");
@@ -30,8 +28,8 @@ int main(void){
 	UserRegisterQuestion();
 	scanf("%s", UserRegisterCheck);
 	if(toupper(UserRegisterCheck[0])=='Y'){
-		while(UserAuthFlag == 1){
-			UserCheckFlager(&UserAuthFlag);
+		while(UserAuthFlag == 0){
+			UserCheck(&UserAuthFlag);
 		} //ログイン成功までログイン試行
 	}
 	else if(toupper(UserRegisterCheck[0])=='N'){
@@ -42,13 +40,16 @@ int main(void){
 		exit(1);
 	}
 
+	printf("DataBase1e9-7へようこそ!\n");
+	printf("目的の項目を選んでください。\n");
 	while(1){
+
 		Menu();
 		scanf("%s", menu_str);
 		switch(toupper(menu_str[0])){
 			case 'R': WordRegister(); break;                //単語登録
 			case 'S': WordSearch(); break;                  //単語検索
-			case 'W': WordDelete(); break;                  //単語削除
+			case 'E': WordDelete(); break;                  //単語削除
 			case 'D': UserDelete(); break;                  //ユーザー削除
 			case 'Q': exit(1);                              //プログラム終了
 			default: printf("コマンドが間違っています。\n");
